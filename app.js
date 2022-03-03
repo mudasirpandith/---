@@ -8,17 +8,16 @@ var fs = require("fs");
 
 app.set("view engine", "ejs");
 
-
 app.get("/", (req, res) => {
   res.render("home");
 });
-
 
 app.post("/fileupload", (req, res) => {
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.filepath;
-    var newpath = __dirname + "/public/images/" + files.filetoupload.originalFilename;
+    var newpath =
+      __dirname + "public/images/" + files.filetoupload.originalFilename;
     fs.rename(oldpath, newpath, function (err) {
       if (err) throw err;
       res.write("File uploaded and moved!");
@@ -26,4 +25,7 @@ app.post("/fileupload", (req, res) => {
     });
   });
 });
-app.listen(3000 || process.env.PORT);
+
+app.listen(process.env.PORT || 3000, function () {
+  console.log("http://localhost:3000");
+});
